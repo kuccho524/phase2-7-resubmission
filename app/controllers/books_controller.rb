@@ -6,11 +6,13 @@ class BooksController < ApplicationController
     @user = @book.user
     @book_comment = BookComment.new
     @book_comments = @book.book_comments
+    @favorite = Favorite.new
   end
 
   def index
     @books = Book.all
     @book = Book.new
+    @favorite = Favorite.new
   end
 
   def create
