@@ -13,6 +13,18 @@
           <%= f.email_field :email, autofocus: true, class: "email" %>
         </div>
         <div class="field">
+          <%= f.label :postal_code %><br>
+          <%= f.text_field :postal_code, autofocus: true, placeholder: 'postal_code', class: "postal_code", id: "address_zipcode" %>
+        </div>
+        <div class="field">
+          <%= f.label :prefecture_code %><br>
+          <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :name, :name, class: "prefecture_code", id: "user_prefecture_code" %><br>
+          <%= f.label :city %><br>
+          <%= f.text_field :city, autofocus: true, placeholder: "city", class: "city", id: "user_address_city" %><br>
+          <%= f.label :street %><br>
+          <%= f.text_field :street, autofocus: true, placeholder: "street", class: "street", id: "user_address_street" %>
+        </div>
+        <div class="field">
           <%= f.label :password %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
