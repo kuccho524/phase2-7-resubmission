@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include JpPrefecture
+  jp_prefecture :prefecture_code
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -17,9 +19,6 @@ class User < ApplicationRecord
   validates :name, length: {maximum: 20, minimum: 2}, uniqueness: true
   validates :introduction, length: {maximum: 50 }
 
-  include JpPrefecture
-  jp_prefecture :prefecture_code
-
   def prefecture_name
     JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
   end
@@ -28,9 +27,6 @@ class User < ApplicationRecord
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
 
-  def full_address
-    prefecture_code + city + street
-  end
 
   def followed_by?(user)
     passive_relationships.find_by(follower_id: user.id).present?
@@ -50,9 +46,4 @@ class User < ApplicationRecord
     end
   end
 
-  private
-
-  def full_address_sign_up
-    self.full_address = prefecture_code + city + street
-  end
 end
